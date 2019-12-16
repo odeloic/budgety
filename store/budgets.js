@@ -1,8 +1,6 @@
-import { budgetsMock } from './budgets-mock'
+// import { budgetsMock } from './budgets-mock'
 export const state = () => ({
-  all: [
-    ...budgetsMock
-  ]
+  all: {}
 })
 
 export const getters = {
@@ -11,8 +9,20 @@ export const getters = {
   }
 }
 
-export const mutations = {
-  add (state, budget) {
+export const actions = {
+  async getBudgets ({ commit }) {
+    const messageRef = this.$fireDb.ref('budgets')
+    try {
+      const messageDoc = await messageRef.once('value')
+      if (messageDoc) {
+        commit('set', messageDoc.val())
+      }
+    } catch (e) {
+      throw (e)
+    }
+  },
+  async addBudget ({ commit }, budget) {
+    const db = this.$fireDb.ref('budgets')
     const budgetExpenses = budget.expenses
       .map(({ amount }) => parseInt(amount))
       .reduce((prev, next) => prev + next, 0)
@@ -21,8 +31,23 @@ export const mutations = {
       days: parseInt(budget.days),
       amount: parseInt(budgetExpenses)
     }
-    state.all.push({
-      ...newBudget
-    })
+    try {
+      await db.push({ ...newBudget })
+    } catch (e) {
+      throw (e)
+    }
+    await commit('add', newBudget)
+  }
+}
+
+export const mutations = {
+  set (state, budgets) {
+    state.all = budgets
+  },
+  add (state, budget) {
+    state.all = {
+      ...state.all,
+      budget
+    }
   }
 }
