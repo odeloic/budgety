@@ -24,6 +24,9 @@ export default {
     ...mapGetters({
       budgets: 'budgets/budgetsList'
     })
+  },
+  async fetch ({ store }) {
+    await store.dispatch('budgets/getBudgets')
   }
 }
 </script>

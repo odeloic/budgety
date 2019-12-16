@@ -53,7 +53,7 @@
   </form>
 </template>
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'NewBudgetForm',
@@ -83,9 +83,12 @@ export default {
     ...mapMutations({
       saveBudget: 'budgets/add'
     }),
+    ...mapActions({
+      addBudget: 'budgets/addBudget'
+    }),
     handleSaveBudget () {
       const budget = this.newBudget
-      this.$store.commit('budgets/add', budget)
+      this.addBudget(budget)
     }
 
   }

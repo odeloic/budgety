@@ -41,7 +41,8 @@ export default {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-fire'
   ],
   /*
   ** Axios module configuration
@@ -57,6 +58,21 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+    }
+  },
+  fire: {
+    config: {
+      apiKey: 'AIzaSyB-ho0eY-Q_nMExJAGUMCWvko_5O1NsG9g',
+      authDomain: 'budgety-f51aa.firebaseapp.com',
+      databaseURL: 'https://budgety-f51aa.firebaseio.com',
+      projectId: 'budgety-f51aa',
+      storageBucket: 'budgety-f51aa.appspot.com',
+      messagingSenderId: '535061755306',
+      appId: '1:535061755306:web:0e1bec794cb59a26f7a7d3'
+    },
+    services: {
+      firestore: true,
+      realtimeDb: true
     }
   }
 }

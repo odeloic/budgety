@@ -22,9 +22,9 @@ export default {
   },
   props: {
     budgets: {
-      type: Array,
+      type: Object,
       default () {
-        return []
+        return {}
       }
     }
   }
